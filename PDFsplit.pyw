@@ -27,7 +27,7 @@ def main():
 		
 		#分割したPDFに名前を付けて保存
 		fnum = '{0:03d}'.format(page+1)
-		newpdf = os.path.join("./item/", f'美しく正しい字が書けるペン字練習帳_{fnum}.pdf')
+		newpdf = os.path.join("./item/", f'test{fnum}.pdf')
 		with open(newpdf, mode='wb') as f:
 			writer.write(f)
 
