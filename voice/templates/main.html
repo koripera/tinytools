@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .player-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .play-button, .pause-button, .stop-button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ccc;
+        }
+        .progress {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h2>Custom Audio Player</h2>
+        <button class="play-button" onclick="playAudio()">Play</button>
+        <button class="pause-button" onclick="pauseAudio()">Pause</button>
+        <button class="stop-button" onclick="stopAudio()">Stop</button>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <audio id="audioPlayer">
+        <source src="/stream-audio" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const audioPlayer = document.getElementById("audioPlayer");
+        const progressBar = document.getElementById("progress");
+
+        // 再生開始
+        function playAudio() {
+            audioPlayer.play();
+            updateProgressBar();
+        }
+
+        // 再生一時停止
+        function pauseAudio() {
+            audioPlayer.pause();
+        }
+
+        // 再生停止
+        function stopAudio() {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;  // 再生位置を先頭にリセット
+        }
+
+        // 再生中の進捗を更新
+        function updateProgressBar() {
+            const duration = audioPlayer.duration;
+            const currentTime = audioPlayer.currentTime;
+            const progress = (currentTime / duration) * 100;
+            progressBar.style.width = progress + "%";
+
+            // 再生中に進捗を更新
+            if (!audioPlayer.paused) {
+                requestAnimationFrame(updateProgressBar);
+            }
+        }
+
+        // 音声再生が終了したら進捗バーをリセット
+        audioPlayer.addEventListener('ended', () => {
+            progressBar.style.width = '0%';
+        });
+    </script>
+</body>
+</html>
