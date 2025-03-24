@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtCore import Qt, QRect
+import logging
 
 import pytesseract
 from PIL import Image,ImageEnhance,ImageFilter
@@ -31,7 +32,7 @@ def TextProcessor(text):
 def ocr(img):
 
 	#ﾘｻｲｽﾞ
-	img = img.resize((img.width * 3, img.height * 3), Image.LANCZOS)
+	img = img.resize((img.width * 4, img.height * 4), Image.LANCZOS)
 
 	#ｸﾞﾚｰｽｹｰﾙ
 	img = img.convert("L")
